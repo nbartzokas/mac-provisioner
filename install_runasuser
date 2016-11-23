@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Arguments
+HOSTNAME="$1"
+USERNAME="$2"
+PASSWORD="$3"
+
+echo "Set wallpaper"
+#https://github.com/pipwerks/OS-X-Wallpaper-Changer
+osascript \
+-e 'tell application "System Events"' \
+-e '    set theDesktops to a reference to every desktop' \
+-e '    repeat with aDesktop in theDesktops' \
+-e '        set the picture of aDesktop to "/Users/Shared/lab_1280x720.jpg"' \
+-e '    end repeat' \
+-e 'end tell'
+# # http://osxdaily.com/2015/08/28/set-wallpaper-command-line-macosx/
+# osascript -e 'tell application "Finder" to set every desktop picture to POSIX file "/Users/Shared/lab_1280x720.jpg"'
+# # https://github.com/herrbischoff/awesome-osx-command-line#wallpaper
+# sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '/Users/Shared/lab_1280x720.jpg'" && killall Dock
+
+echo "Disable screensaver"
+# http://apple.stackexchange.com/questions/135444/disable-screen-saver-on-os-x-10-9
+defaults -currentHost write com.apple.screensaver idleTime -int 0
+
+echo "Auto hide dock"
+# https://github.com/pahen/dotfiles/blob/master/.osx
+defaults write com.apple.dock autohide -bool true && \
+killall Dock
+
+echo "Span all displays"
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+defaults write com.apple.spaces spans-displays -bool true
+
+echo "Disable notification center service"
+# https://github.com/herrbischoff/awesome-osx-command-line#notification-center-service
+launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist && \
+killall -9 NotificationCenter
+
+echo "Disable Warning on opening new App."
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+spctl --master-disable
+
+echo "Disable the “Are you sure you want to open this application?” dialog"
+# https://gist.github.com/clowder/2758847
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+echo "Disable resume system-wide"
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool FALSE
+
+echo "Disable resume per application"
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+defaults write -g ApplePersistenceIgnoreState YES
+
+echo "Disable crash reporter"
+# http://www.defaults-write.com/disable-os-x-crash-report-dialog-window/
+defaults write com.apple.CrashReporter DialogType none
+
+echo "Disable the “reopen windows when logging back in” option"
+# https://gist.github.com/clowder/2758847
+# This works, although the checkbox will still appear to be checked.
+defaults write com.apple.loginwindow TALLogoutSavesState -bool false
+defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool false
+
+echo "Turn off natural scroll direction"
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+defaults write -g com.apple.swipescrolldirection -bool FALSE
+
+echo "Disable smart quotes and dashes. Useful for safe editing of text files."
+# https://github.com/hjuutilainen/dotfiles/blob/master/bin/osx-user-defaults.sh
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false

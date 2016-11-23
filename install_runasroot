@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# Arguments
+HOSTNAME="$1"
+USERNAME="$2"
+PASSWORD="$3"
+
+# Begin sudo for rest of script
+#https://gist.github.com/cowboy/3118588
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+echo "Provisioning host: ${HOSTNAME}"
+
+echo "Set hostname"
+sudo systemsetup -setcomputername "${HOSTNAME}"
+# https://github.com/herrbischoff/awesome-osx-command-line#set-computer-namehost-name
+sudo scutil --set ComputerName "${HOSTNAME}" && \
+sudo scutil --set HostName "${HOSTNAME}" && \
+sudo scutil --set LocalHostName "${HOSTNAME}" && \
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "${HOSTNAME}"
+
+echo "Disable system sleep"
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+sudo pmset sleep 0
+
+echo "Disable display sleep"
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+sudo pmset displaysleep 0
+
+echo "Enable wake on ethernet"
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+sudo pmset womp 1
+
+echo "Restart on power failure, freeze"
+sudo systemsetup -setrestartpowerfailure on
+sudo systemsetup -setrestartfreeze on
+
+echo "Schedule shutdown and poweron"
+# http://apple.stackexchange.com/questions/56635/schedule-multiple-wake-up-times-for-mac
+sudo pmset repeat shutdown MTWRFSU 02:00:00 wakeorpoweron MTWRFSU 06:45:00
+
+echo "Disable bluetooth"
+# https://github.com/herrbischoff/awesome-osx-command-line#bluetooth
+sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0 && \
+sudo killall -HUP blued
+# https://github.com/MacMiniVault/Mac-Scripts/blob/master/setupscript/setupscript.sh
+sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState '0' > /dev/null 2>&1
+sudo defaults write /Library/Preferences/com.apple.Bluetooth BluetoothAutoSeekKeyboard '0' > /dev/null 2>&1
+sudo defaults write /Library/Preferences/com.apple.Bluetooth BluetoothAutoSeekPointingDevice '0' > /dev/null 2>&1
+
+echo "Turn on Remote Desktop Sharing, allow access for all users, and enable the menu extra"
+# https://support.apple.com/en-us/HT201710
+sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -allowAccessFor -allUsers -privs -all -clientopts -setmenuextra -menuextra yes
+
+echo "Disable : SystemPreferences -> AppStore -> Automatically check for updates"
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticCheckEnabled -bool FALSE
+
+echo "Setup auto login."
+# https://gist.github.com/rettuce/71c801881e1433c3a9de
+# http://osxnotes.net/passwords.html
+# http://www.brock-family.org/gavin/perl/kcpassword.html
+sudo defaults write /Library/Preferences/com.apple.loginwindow autoLoginUser $USERNAME
+sudo ruby -e"password=\"${PASSWORD}\".bytes; key=[125,137,82,35,210,188,221,234,163,185,31]; num=12*(1+password.size/12); out=Array.new(num); (0..num-1).each { |i| i<password.size ? out[i]=password[i]^key[i%key.size] : out[i]=key[i%key.size] }; IO.write(\"/etc/kcpassword\",out.pack(\"C*\"));"
+sudo chmod 0600 /etc/kcpassword

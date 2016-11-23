@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Prompt for ...
+HOSTNAME="$(osascript -e 'Tell application "System Events" to display dialog "Enter the desired Hostname:" default answer "LAB-'$(uuidgen)'"' -e 'text returned of result' 2>/dev/null)"
+USERNAME="$(osascript -e 'Tell application "System Events" to display dialog "Enter the default Username:" default answer "'$(whoami)'"' -e 'text returned of result' 2>/dev/null)"
+PASSWORD="$(osascript -e 'Tell application "System Events" to display dialog "Enter the default Password:" default answer ""' -e 'text returned of result' 2>/dev/null)"
+
+# Run scripts
+sudo -u $USERNAME ./install_runasuser "$HOSTNAME" "$USERNAME" "$PASSWORD">/tmp/com.rockwellgroup.labprovisioner.user.log 2>&1
+sudo ./install_runasroot "$HOSTNAME" "$USERNAME" "$PASSWORD">/tmp/com.rockwellgroup.labprovisioner.root.log 2>&1
+    
