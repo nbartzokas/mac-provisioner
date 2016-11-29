@@ -71,3 +71,7 @@ echo "Disable smart quotes and dashes. Useful for safe editing of text files."
 # https://github.com/hjuutilainen/dotfiles/blob/master/bin/osx-user-defaults.sh
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# echo "Hide all of the desktop icons"
+# # https://github.com/hjuutilainen/dotfiles/blob/master/bin/osx-user-defaults.sh
+# defaults write com.apple.finder CreateDesktop -bool false
