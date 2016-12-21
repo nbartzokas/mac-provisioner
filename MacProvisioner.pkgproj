@@ -370,24 +370,7 @@
 						<array>
 							<dict>
 								<key>CHILDREN</key>
-								<array>
-									<dict>
-										<key>CHILDREN</key>
-										<array/>
-										<key>GID</key>
-										<integer>0</integer>
-										<key>PATH</key>
-										<string>1280x720.jpg</string>
-										<key>PATH_TYPE</key>
-										<integer>1</integer>
-										<key>PERMISSIONS</key>
-										<integer>420</integer>
-										<key>TYPE</key>
-										<integer>3</integer>
-										<key>UID</key>
-										<integer>0</integer>
-									</dict>
-								</array>
+								<array/>
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
@@ -444,7 +427,56 @@
 				<integer>1</integer>
 			</dict>
 			<key>RESOURCES</key>
-			<array/>
+			<array>
+				<dict>
+					<key>CHILDREN</key>
+					<array/>
+					<key>GID</key>
+					<integer>0</integer>
+					<key>PATH</key>
+					<string>1280x720.jpg</string>
+					<key>PATH_TYPE</key>
+					<integer>1</integer>
+					<key>PERMISSIONS</key>
+					<integer>420</integer>
+					<key>TYPE</key>
+					<integer>3</integer>
+					<key>UID</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>CHILDREN</key>
+					<array/>
+					<key>GID</key>
+					<integer>0</integer>
+					<key>PATH</key>
+					<string>install_runasroot</string>
+					<key>PATH_TYPE</key>
+					<integer>1</integer>
+					<key>PERMISSIONS</key>
+					<integer>493</integer>
+					<key>TYPE</key>
+					<integer>3</integer>
+					<key>UID</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>CHILDREN</key>
+					<array/>
+					<key>GID</key>
+					<integer>0</integer>
+					<key>PATH</key>
+					<string>install_runasuser</string>
+					<key>PATH_TYPE</key>
+					<integer>1</integer>
+					<key>PERMISSIONS</key>
+					<integer>493</integer>
+					<key>TYPE</key>
+					<integer>3</integer>
+					<key>UID</key>
+					<integer>0</integer>
+				</dict>
+			</array>
 		</dict>
 		<key>PACKAGE_SETTINGS</key>
 		<dict>

@@ -5,13 +5,17 @@ HOSTNAME="$1"
 USERNAME="$2"
 PASSWORD="$3"
 
+echo "####################"
+echo "# install_runasuser"
+
 echo "Set wallpaper"
 #https://github.com/pipwerks/OS-X-Wallpaper-Changer
+cp ./1280x720.jpg ~/Pictures/1280x720.jpg
 osascript \
 -e 'tell application "System Events"' \
 -e '    set theDesktops to a reference to every desktop' \
 -e '    repeat with aDesktop in theDesktops' \
--e '        set the picture of aDesktop to "/Users/Shared/lab_1280x720.jpg"' \
+-e '        set the picture of aDesktop to "~/Pictures/1280x720.jpg"' \
 -e '    end repeat' \
 -e 'end tell'
 # # http://osxdaily.com/2015/08/28/set-wallpaper-command-line-macosx/

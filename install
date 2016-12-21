@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Prompt for ...
-HOSTNAME="$(osascript -e 'Tell application "System Events" to display dialog "Enter the desired Hostname:" default answer "LAB-'$(uuidgen)'"' -e 'text returned of result' 2>/dev/null)"
+HOSTNAME="$(osascript -e 'Tell application "System Events" to display dialog "Enter the desired Hostname:" default answer "'$(hostname)'"' -e 'text returned of result' 2>/dev/null)"
 USERNAME="$(osascript -e 'Tell application "System Events" to display dialog "Enter the default Username:" default answer "'$(whoami)'"' -e 'text returned of result' 2>/dev/null)"
 PASSWORD="$(osascript -e 'Tell application "System Events" to display dialog "Enter the default Password:" default answer ""' -e 'text returned of result' 2>/dev/null)"
 

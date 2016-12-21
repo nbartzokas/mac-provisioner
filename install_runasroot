@@ -5,6 +5,9 @@ HOSTNAME="$1"
 USERNAME="$2"
 PASSWORD="$3"
 
+echo "####################"
+echo "# install_runasroot"
+
 # Begin sudo for rest of script
 #https://gist.github.com/cowboy/3118588
 sudo -v
@@ -62,7 +65,7 @@ echo "Setup auto login."
 # http://osxnotes.net/passwords.html
 # http://www.brock-family.org/gavin/perl/kcpassword.html
 sudo defaults write /Library/Preferences/com.apple.loginwindow autoLoginUser $USERNAME
-sudo ruby -e"password=\"${PASSWORD}\".bytes; key=[125,137,82,35,210,188,221,234,163,185,31]; num=12*(1+password.size/12); out=Array.new(num); (0..num-1).each { |i| i<password.size ? out[i]=password[i]^key[i%key.size] : out[i]=key[i%key.size] }; IO.write(\"/etc/kcpassword\",out.pack(\"C*\"));"
+sudo ruby -e"password=\"${PASSWORD}\".bytes; key=[125,137,82,35,210,188,221,234,163,185,31]; num=12*(1+password.size/12); out=Array.new(num); out.fill(0); (0..password.size).each { |i| out[i]=password[i]^key[i%key.size]; }; out[password.size]=key[password.size%key.size]; IO.write(\"/etc/kcpassword\",out.pack(\"C*\"));"
 sudo chmod 0600 /etc/kcpassword
 
 echo "Disable the 'This Application Unexpectedly Quit' and the subsequent bug report" 
