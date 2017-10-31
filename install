@@ -6,6 +6,6 @@ USERNAME="$(osascript -e 'Tell application "System Events" to display dialog "En
 PASSWORD="$(osascript -e 'Tell application "System Events" to display dialog "Enter the default Password:" default answer ""' -e 'text returned of result' 2>/dev/null)"
 
 # Run scripts
-sudo -u $USERNAME ./install_runasuser "$HOSTNAME" "$USERNAME" "$PASSWORD">/tmp/com.rockwellgroup.labprovisioner.user.log 2>&1
-sudo ./install_runasroot "$HOSTNAME" "$USERNAME" "$PASSWORD">/tmp/com.rockwellgroup.labprovisioner.root.log 2>&1
+sudo -u $USERNAME "./install_runasuser" "$HOSTNAME" "$USERNAME" "$PASSWORD">/tmp/com.github.nbartzokas.macprovisioner.user.log 2>&1
+sudo "./install_runasroot" "$HOSTNAME" "$USERNAME" "$PASSWORD">/tmp/com.github.nbartzokas.macprovisioner.root.log 2>&1
     
