@@ -30,6 +30,7 @@ Executing this package will:
 
 ### Sources
 
+- [http://openframeworks.cc/ofBook/chapters/installation_up_4evr_macosx.html](http://openframeworks.cc/ofBook/chapters/installation_up_4evr_macosx.html)
 - [https://github.com/herrbischoff/awesome-osx-command-line](https://github.com/herrbischoff/awesome-osx-command-line)
 - [https://github.com/MacMiniVault/Mac-Scripts/blob/master/setupscript/setupscript.sh](https://github.com/MacMiniVault/Mac-Scripts/blob/master/setupscript/setupscript.sh)
 - [https://github.com/hjuutilainen/dotfiles/blob/master/bin/osx-user-defaults.sh](https://github.com/hjuutilainen/dotfiles/blob/master/bin/osx-user-defaults.sh)
